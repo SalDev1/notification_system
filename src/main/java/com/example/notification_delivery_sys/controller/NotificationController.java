@@ -1,19 +1,16 @@
 package com.example.notification_delivery_sys.controller;
 
-import com.example.notification_delivery_sys.dto.NotificationReq;
-import com.example.notification_delivery_sys.dto.NotificationRes;
+import com.example.notification_delivery_sys.dto.notification.NotificationReq;
+import com.example.notification_delivery_sys.dto.notification.NotificationRes;
 import com.example.notification_delivery_sys.entity.NotificationRecord;
-import com.example.notification_delivery_sys.entity.NotificationStatus;
+import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.exception.NotificationNotFoundException;
 import com.example.notification_delivery_sys.service.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController

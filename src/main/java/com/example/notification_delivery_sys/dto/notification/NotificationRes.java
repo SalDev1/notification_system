@@ -1,6 +1,6 @@
-package com.example.notification_delivery_sys.dto;
+package com.example.notification_delivery_sys.dto.notification;
 
-import com.example.notification_delivery_sys.entity.NotificationStatus;
+import com.example.notification_delivery_sys.enums.NotificationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

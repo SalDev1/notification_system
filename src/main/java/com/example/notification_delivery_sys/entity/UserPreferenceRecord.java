@@ -2,7 +2,6 @@ package com.example.notification_delivery_sys.entity;
 
 import com.example.notification_delivery_sys.enums.NotificationCategory;
 import com.example.notification_delivery_sys.enums.NotificationChannel;
-import com.example.notification_delivery_sys.enums.NotificationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,14 +16,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "notification_records")
-public class NotificationRecord {
+@Table(name = "user_preferences")
+public class UserPreferenceRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID id;
-
-    public String recipient;
+    public UUID userId;
 
     @Enumerated(EnumType.STRING)
     public NotificationChannel channel;
@@ -32,10 +29,9 @@ public class NotificationRecord {
     @Enumerated(EnumType.STRING)
     public NotificationCategory category;
 
-    public String subject;
-    public String message;
-    public NotificationStatus status;
-    public Date createdAt;
-    public Date updatedAt;
-    public Number retryCount;
+    public boolean enabled;
+
+    public Date quiteHoursStart;
+    public Date quiteHoursEnd;
+    public String timezone;
 }

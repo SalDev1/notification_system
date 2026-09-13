@@ -1,9 +1,8 @@
 package com.example.notification_delivery_sys.service;
 
-import com.example.notification_delivery_sys.dto.NotificationReq;
-import com.example.notification_delivery_sys.dto.NotificationRes;
+import com.example.notification_delivery_sys.dto.notification.NotificationReq;
+import com.example.notification_delivery_sys.dto.notification.NotificationRes;
 import com.example.notification_delivery_sys.entity.NotificationRecord;
-import com.example.notification_delivery_sys.entity.NotificationStatus;
 
 import java.util.Optional;
 import java.util.UUID;

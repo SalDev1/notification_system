@@ -1,4 +1,4 @@
-package com.example.notification_delivery_sys.entity;
+package com.example.notification_delivery_sys.enums;
 
 public enum NotificationStatus {
     ACCEPTED,
