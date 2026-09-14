@@ -38,4 +38,12 @@ public class GlobalExceptionHandler {
         response.put("status", 404);
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(UserPreferenceNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNoSuchElementException(UserPreferenceNotFoundException ex) {
+        Map<String,Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", 404);
+        return ResponseEntity.badRequest().body(response);
+    }
 }

@@ -31,6 +31,8 @@ public class NotificationServiceImpl implements NotificationService {
                         notificationRequest.getChannel() ,
                         notificationRequest.getCategory());
 
+        System.out.println("user preference console.log" + userPreference);
+
         if(userPreference.isPresent() && !userPreference.get().isEnabled()) {
             System.out.println("User not allowed to receive notification");
             return null;
