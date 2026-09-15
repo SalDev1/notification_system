@@ -3,18 +3,26 @@ package com.example.notification_delivery_sys.service;
 import com.example.notification_delivery_sys.dto.notification.NotificationReq;
 import com.example.notification_delivery_sys.dto.notification.NotificationRes;
 import com.example.notification_delivery_sys.entity.NotificationRecord;
+import com.example.notification_delivery_sys.entity.NotificationTemplate;
 import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
+
+    Map<String, NotificationTemplate> notificationTemplates = Map.of(
+            "IN_APP_PROMOTIONAL", new NotificationTemplate().builder().templateId("IN_APP_PROMOTIONAL").build(),
+            "EMAIL_PROMOTIONAL", new NotificationTemplate().builder().templateId("EMAIL_PROMOTIONAL").build(),
+            "SMS_PROMOTIONAL", new NotificationTemplate().builder().templateId("SMS_PROMOTIONAL").build(),
+            "SMS_TRANSACTIONAL", new NotificationTemplate().builder().templateId("SMS_TRANSACTIONAL").build(),
+            "IN_APP_TRANSACTIONAL", new NotificationTemplate().builder().templateId("IN_APP_TRANSACTIONAL").build(),
+            "EMAIL_TRANSACTIONAL", new NotificationTemplate().builder().templateId("EMAIL_TRANSACTIONAL").build()
+    );
 
     @Autowired
     public NotificationRepository notificationRepository;
@@ -51,10 +59,18 @@ public class NotificationServiceImpl implements NotificationService {
 
         notificationRepository.save(newNotificationRecord);
 
+        NotificationTemplate finalResponseTemplate = notificationTemplates
+                .get(notificationRequest.getChannel() + "_" + notificationRequest.getCategory());
+
+        finalResponseTemplate.setSubject(notificationRequest.getSubject());
+        finalResponseTemplate.setBody(notificationRequest.getMessage());
+
         NotificationRes finalHttpResponse = new NotificationRes()
                 .builder()
                 .notificationId(newNotificationRecord.getId())
                 .status(NotificationStatus.ACCEPTED)
+//                .template(Map.of("template", finalResponseTemplate))
+                .template(finalResponseTemplate)
                 .build();
 
         return finalHttpResponse;
