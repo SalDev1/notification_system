@@ -17,12 +17,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "notification_records")
+// UniqueConstraints --> Only helps with preventing duplicate database records.
+// We Achieve :- A user cannot receive the same notification twice based on unique parameters.
+@Table(name = "notification_records",
+        uniqueConstraints ={ @UniqueConstraint(columnNames = {"idempotency_key"})})
 public class NotificationRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     public UUID id;
+
+    public String triggerId;
 
     public String recipient;
 
@@ -32,9 +37,16 @@ public class NotificationRecord {
     @Enumerated(EnumType.STRING)
     public NotificationCategory category;
 
+    @Column(name = "idempotency_key", unique = true, nullable = false)
+    // triggerId + channel + recipient;
+    public String notificationIdempotencyKey;
+
     public String subject;
     public String message;
+
+    @Enumerated(EnumType.STRING)
     public NotificationStatus status;
+
     public Date createdAt;
     public Date updatedAt;
     public Number retryCount;
