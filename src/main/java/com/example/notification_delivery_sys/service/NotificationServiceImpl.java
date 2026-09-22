@@ -1,5 +1,6 @@
 package com.example.notification_delivery_sys.service;
 
+import com.example.notification_delivery_sys.KafkaConfig.KafkaProducer;
 import com.example.notification_delivery_sys.dto.notification.NotificationReq;
 import com.example.notification_delivery_sys.dto.notification.NotificationRes;
 import com.example.notification_delivery_sys.entity.NotificationRecord;
@@ -9,6 +10,7 @@ import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.repository.NotificationRepository;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -31,6 +33,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     public UserPreferenceService userPreferenceService;
+
+    @Autowired
+    private KafkaProducer kafkaProducer;
 
     @Override
     public NotificationRes saveNotificationResponse(NotificationReq notificationRequest) {
@@ -90,8 +95,11 @@ public class NotificationServiceImpl implements NotificationService {
                     .template(finalResponseTemplate)
                     .build();
 
+            kafkaProducer.sendMessage("Notification was sent to " + notificationRequest.getRecipient() + " successfully");
             return finalHttpResponse;
-        } catch (Data)
+        } catch (DataIntegrityViolationException ex) {
+            return null;
+        }
     }
 
     @Override
