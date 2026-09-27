@@ -4,7 +4,6 @@ import com.example.notification_delivery_sys.dto.user_preference.UserPreferenceR
 import com.example.notification_delivery_sys.dto.user_preference.UserPreferenceRes;
 import com.example.notification_delivery_sys.dto.user_preference.UserUpdatePreferenceReq;
 import com.example.notification_delivery_sys.dto.user_preference.UserUpdatePreferenceRes;
-import com.example.notification_delivery_sys.service.UserPreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

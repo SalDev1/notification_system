@@ -5,7 +5,6 @@ import com.example.notification_delivery_sys.dto.notification.NotificationRes;
 import com.example.notification_delivery_sys.entity.NotificationRecord;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.exception.NotificationNotFoundException;
-import com.example.notification_delivery_sys.service.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

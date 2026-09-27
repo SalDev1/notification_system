@@ -1,4 +1,4 @@
-package com.example.notification_delivery_sys.service;
+package com.example.notification_delivery_sys.service.user_preference;
 
 import com.example.notification_delivery_sys.dto.user_preference.UserPreferenceReq;
 import com.example.notification_delivery_sys.dto.user_preference.UserPreferenceRes;

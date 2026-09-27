@@ -1,4 +1,4 @@
-package com.example.notification_delivery_sys.service;
+package com.example.notification_delivery_sys.service.user_preference;
 
 import com.example.notification_delivery_sys.dto.user_preference.UserPreferenceReq;
 import com.example.notification_delivery_sys.dto.user_preference.UserPreferenceRes;
@@ -7,7 +7,6 @@ import com.example.notification_delivery_sys.dto.user_preference.UserUpdatePrefe
 import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationCategory;
 import com.example.notification_delivery_sys.enums.NotificationChannel;
-import com.example.notification_delivery_sys.exception.NotificationNotFoundException;
 import com.example.notification_delivery_sys.exception.UserPreferenceNotFoundException;
 import com.example.notification_delivery_sys.repository.UserPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;

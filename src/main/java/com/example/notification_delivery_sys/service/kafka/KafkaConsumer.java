@@ -1,4 +1,4 @@
-package com.example.notification_delivery_sys.KafkaConfig;
+package com.example.notification_delivery_sys.service.kafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

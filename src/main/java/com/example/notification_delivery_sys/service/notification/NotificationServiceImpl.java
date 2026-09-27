@@ -1,6 +1,5 @@
-package com.example.notification_delivery_sys.service;
+package com.example.notification_delivery_sys.service.notification;
 
-import com.example.notification_delivery_sys.KafkaConfig.KafkaProducer;
 import com.example.notification_delivery_sys.dto.notification.NotificationReq;
 import com.example.notification_delivery_sys.dto.notification.NotificationRes;
 import com.example.notification_delivery_sys.entity.NotificationRecord;
@@ -8,13 +7,18 @@ import com.example.notification_delivery_sys.entity.NotificationTemplate;
 import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.repository.NotificationRepository;
+import com.example.notification_delivery_sys.service.kafka.KafkaProducerService;
+import com.example.notification_delivery_sys.service.user_preference.UserPreferenceService;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -35,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
     public UserPreferenceService userPreferenceService;
 
     @Autowired
-    private KafkaProducer kafkaProducer;
+    private KafkaProducerService kafkaProducerService;
 
     @Override
     public NotificationRes saveNotificationResponse(NotificationReq notificationRequest) {
@@ -95,7 +99,7 @@ public class NotificationServiceImpl implements NotificationService {
                     .template(finalResponseTemplate)
                     .build();
 
-            kafkaProducer.sendMessage("Notification was sent to " + notificationRequest.getRecipient() + " successfully");
+            kafkaProducerService.sendMessage("Notification was sent to " + notificationRequest.getRecipient() + " successfully");
             return finalHttpResponse;
         } catch (DataIntegrityViolationException ex) {
             return null;
