@@ -2,6 +2,7 @@ package com.example.notification_delivery_sys.entity;
 
 import com.example.notification_delivery_sys.enums.NotificationCategory;
 import com.example.notification_delivery_sys.enums.NotificationChannel;
+import com.example.notification_delivery_sys.enums.NotificationPriority;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,9 @@ public class NotificationRecord {
 
     @Enumerated(EnumType.STRING)
     public NotificationCategory category;
+
+    @Enumerated(EnumType.STRING)
+    public NotificationPriority priority;
 
     @Column(name = "idempotency_key", unique = true, nullable = false)
     // triggerId + channel + recipient;

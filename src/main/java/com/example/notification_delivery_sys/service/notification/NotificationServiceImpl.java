@@ -99,7 +99,7 @@ public class NotificationServiceImpl implements NotificationService {
                     .template(finalResponseTemplate)
                     .build();
 
-            kafkaProducerService.sendMessage("Notification was sent to " + notificationRequest.getRecipient() + " successfully");
+            kafkaProducerService.sendMessage(notificationRequest);
             return finalHttpResponse;
         } catch (DataIntegrityViolationException ex) {
             return null;

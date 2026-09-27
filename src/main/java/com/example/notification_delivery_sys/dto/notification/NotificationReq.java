@@ -2,8 +2,7 @@ package com.example.notification_delivery_sys.dto.notification;
 
 import com.example.notification_delivery_sys.enums.NotificationCategory;
 import com.example.notification_delivery_sys.enums.NotificationChannel;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.example.notification_delivery_sys.enums.NotificationPriority;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,6 +23,8 @@ public class NotificationReq {
 
     @NotBlank(message = "Please enter valid recipient")
     public String recipient;
+
+    public NotificationPriority priority;
 
     @NotNull(message = "Please enter valid channel name")
     public NotificationChannel channel;
