@@ -30,8 +30,11 @@ public class KafkaTopicConfig {
 
         return new KafkaAdmin.NewTopics(
                 notification_priority_topic1,
-                notification_priority_topic2 ,
-                notification_priority_topic3
+                notification_priority_topic2,
+                notification_priority_topic3,
+                notification_channel_topic1,
+                notification_channel_topic2,
+                notification_channel_topic3
         );
     }
 }
