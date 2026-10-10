@@ -1,6 +1,7 @@
 package com.example.notification_delivery_sys.service.kafka.channel_consumers;
 
 import com.example.notification_delivery_sys.dto.notification.NotificationReq;
+import com.example.notification_delivery_sys.event.KafkaNotificationEvent;
 import com.example.notification_delivery_sys.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,7 +15,7 @@ public class InAppConsumer {
 
     @KafkaListener(topics = "notification.channel.inapp", groupId = "notifications-test-group")
     public void consumeMessageThroughInAppChannel(String message) {
-        NotificationReq req = jsonUtils.deserialize(message,NotificationReq.class);
+        KafkaNotificationEvent req = jsonUtils.deserialize(message, KafkaNotificationEvent.class);
         System.out.println("deseralize record ===" + req);
 //        The below code helps with pushing the record with dlt topic and invoking retry mechanism by intentionally calling an exception.
 //        if(req.getRecipient().equals("salman123@example.com")) {

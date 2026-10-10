@@ -46,7 +46,7 @@ public class RedisConfig {
     @Bean
     public Supplier<BucketConfiguration> bucketConfiguration() {
        return () -> BucketConfiguration.builder()
-               .addLimit(Bandwidth.simple(2, Duration.ofMinutes(1L)))
+               .addLimit(Bandwidth.simple(15, Duration.ofMinutes(1L)))
                .build();
     }
 }

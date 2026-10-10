@@ -2,9 +2,12 @@ package com.example.notification_delivery_sys.service.kafka;
 
 import com.example.notification_delivery_sys.dto.notification.NotificationReq;
 import com.example.notification_delivery_sys.enums.NotificationPriority;
+import com.example.notification_delivery_sys.event.KafkaNotificationEvent;
+import com.example.notification_delivery_sys.repository.notification.ProcessedNotificationRepository;
 import com.example.notification_delivery_sys.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +24,14 @@ public class KafkaProducerService {
         this.jsonUtils = jsonUtils;
     }
 
-    public void sendMessage(NotificationReq notificationRequest) {
-        String kafkaSerializedMessage = jsonUtils.serialize(notificationRequest);
+    public void sendMessage(KafkaNotificationEvent event) {
+        String kafkaSerializedMessage = jsonUtils.serialize(event);
 
-        if(notificationRequest.getPriority() == NotificationPriority.HIGH) {
+        if(event.getPriority() == NotificationPriority.HIGH) {
               kafkaTemplate.send("notification.priority.high", kafkaSerializedMessage);
-          } else if(notificationRequest.getPriority() == NotificationPriority.MEDIUM) {
+          } else if(event.getPriority() == NotificationPriority.MEDIUM) {
               kafkaTemplate.send("notification.priority.medium", kafkaSerializedMessage);
-          } else if(notificationRequest.getPriority() == NotificationPriority.LOW) {
+          } else if(event.getPriority() == NotificationPriority.LOW) {
               kafkaTemplate.send("notification.priority.low", kafkaSerializedMessage);
           }
     }

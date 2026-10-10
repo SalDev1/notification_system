@@ -6,7 +6,8 @@ import com.example.notification_delivery_sys.entity.NotificationRecord;
 import com.example.notification_delivery_sys.entity.NotificationTemplate;
 import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
-import com.example.notification_delivery_sys.repository.NotificationRepository;
+import com.example.notification_delivery_sys.event.KafkaNotificationEvent;
+import com.example.notification_delivery_sys.repository.notification.NotificationRepository;
 import com.example.notification_delivery_sys.service.kafka.KafkaProducerService;
 import com.example.notification_delivery_sys.service.user_preference.UserPreferenceService;
 import com.google.common.hash.Hashing;
@@ -99,7 +100,17 @@ public class NotificationServiceImpl implements NotificationService {
                     .template(finalResponseTemplate)
                     .build();
 
-            kafkaProducerService.sendMessage(notificationRequest);
+            KafkaNotificationEvent event = new KafkaNotificationEvent()
+                    .builder()
+                    .notificationEventId(newNotificationRecord.getNotificationIdempotencyKey())
+                    .status(NotificationStatus.PROCESSING)
+                    .category(notificationRequest.getCategory())
+                    .channel(notificationRequest.getChannel())
+                    .priority(notificationRequest.getPriority())
+                    .createdAt(new Date())
+                    .build();
+
+            kafkaProducerService.sendMessage(event);
             return finalHttpResponse;
         } catch (DataIntegrityViolationException ex) {
             return null;

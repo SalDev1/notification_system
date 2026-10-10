@@ -1,4 +1,4 @@
-package com.example.notification_delivery_sys.repository;
+package com.example.notification_delivery_sys.repository.user;
 
 import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationCategory;

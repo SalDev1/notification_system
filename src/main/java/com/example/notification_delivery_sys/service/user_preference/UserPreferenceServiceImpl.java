@@ -8,7 +8,7 @@ import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationCategory;
 import com.example.notification_delivery_sys.enums.NotificationChannel;
 import com.example.notification_delivery_sys.exception.UserPreferenceNotFoundException;
-import com.example.notification_delivery_sys.repository.UserPreferenceRepository;
+import com.example.notification_delivery_sys.repository.user.UserPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
