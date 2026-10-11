@@ -24,15 +24,18 @@ public class KafkaProducerService {
         this.jsonUtils = jsonUtils;
     }
 
+    public String resolveKafkaPriorityTopic(KafkaNotificationEvent event) {
+        NotificationPriority priority = event.getPriority();
+        return switch(priority.toString()){
+            case "HIGH" -> "notification.priority.high";
+            case "MEDIUM" -> "notification.priority.medium";
+            case "LOW" -> "notification.priority.low";
+            default -> "";
+        };
+    }
+
     public void sendMessage(KafkaNotificationEvent event) {
         String kafkaSerializedMessage = jsonUtils.serialize(event);
-
-        if(event.getPriority() == NotificationPriority.HIGH) {
-              kafkaTemplate.send("notification.priority.high", kafkaSerializedMessage);
-          } else if(event.getPriority() == NotificationPriority.MEDIUM) {
-              kafkaTemplate.send("notification.priority.medium", kafkaSerializedMessage);
-          } else if(event.getPriority() == NotificationPriority.LOW) {
-              kafkaTemplate.send("notification.priority.low", kafkaSerializedMessage);
-          }
+        kafkaTemplate.send(resolveKafkaPriorityTopic(event), kafkaSerializedMessage);
     }
 }

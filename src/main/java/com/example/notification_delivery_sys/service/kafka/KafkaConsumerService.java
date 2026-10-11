@@ -73,6 +73,7 @@ public class KafkaConsumerService {
             kafkaTemplate.send(channel_topics.get(notifEvent.getChannel().toString()), message);
         }
     }
+
     @KafkaListener(topics = "notification.priority.low", groupId = "notifications-test-group")
     public void consumeLowPriorityMessage(String message) {
         System.out.println("Received Low Priority Message " + message);
