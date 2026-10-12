@@ -8,6 +8,7 @@ import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationCategory;
 import com.example.notification_delivery_sys.enums.NotificationChannel;
 import com.example.notification_delivery_sys.exception.UserPreferenceNotFoundException;
+import com.example.notification_delivery_sys.metrics.UserPreferenceMetrics;
 import com.example.notification_delivery_sys.repository.user.UserPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 
     @Autowired
     public UserPreferenceRepository userPreferenceRepository;
+
+    @Autowired
+    public UserPreferenceMetrics userPreferenceMetrics;
 
     @Override
     public UserPreferenceRes saveUserPreference(UserPreferenceReq userReq) {
@@ -41,6 +45,8 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
                 .userId(newUserPreferenceRecord.getUserId())
                 .responseMessage("User Preference is Saved Sucessfully")
                 .build();
+
+        userPreferenceMetrics.userPreferenceAdded();
 
         return finalResponse;
     }
@@ -69,6 +75,7 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
                 .responseMessage("User Preference is updated successfully")
                 .build();
 
+        userPreferenceMetrics.userPreferenceUpdated();
         return finalResponse;
     }
 }

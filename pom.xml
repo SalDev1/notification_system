@@ -124,6 +124,16 @@
 			<artifactId>micrometer-registry-prometheus</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Micrometer Tracing bridge for OpenTelemetry - connects Spring's tracing API to OTel -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
+		<!-- OpenTelemetry exporter for OTLP protocol - sends traces to collectors -->
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
