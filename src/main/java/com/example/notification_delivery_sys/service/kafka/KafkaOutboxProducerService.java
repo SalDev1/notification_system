@@ -5,11 +5,13 @@ import com.example.notification_delivery_sys.enums.NotificationOutboxStatus;
 import com.example.notification_delivery_sys.enums.NotificationPriority;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.event.KafkaNotificationEvent;
+import com.example.notification_delivery_sys.metrics.NotificationMetrics;
 import com.example.notification_delivery_sys.repository.notification.OutboxNotificationRepository;
 import com.example.notification_delivery_sys.utils.JsonUtils;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,13 @@ public class KafkaOutboxProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private JsonUtils jsonUtils;
     public OutboxNotificationRepository outboxNotificationRepository;
+    public NotificationMetrics notificationMetrics;
 
-    public KafkaOutboxProducerService(KafkaTemplate<String, String> kafkaTemplate, JsonUtils jsonUtils, OutboxNotificationRepository outboxNotificationRepository) {
+    public KafkaOutboxProducerService(KafkaTemplate<String, String> kafkaTemplate, JsonUtils jsonUtils, OutboxNotificationRepository outboxNotificationRepository, NotificationMetrics notificationMetrics) {
         this.kafkaTemplate = kafkaTemplate;
         this.jsonUtils = jsonUtils;
         this.outboxNotificationRepository = outboxNotificationRepository;
+        this.notificationMetrics = notificationMetrics;
     }
 
     public String resolveKafkaPriorityTopic(KafkaNotificationEvent event) {
@@ -40,6 +44,15 @@ public class KafkaOutboxProducerService {
             case "LOW" -> "notification.priority.low";
             default -> "";
         };
+    }
+
+    public void notificationMetricCallback(KafkaNotificationEvent event) {
+        NotificationPriority priority = event.getPriority();
+        switch (priority) {
+            case HIGH -> notificationMetrics.notificationHighPriorityRequests();
+            case MEDIUM -> notificationMetrics.notificationMediumPriorityRequests();
+            case LOW -> notificationMetrics.notificationLowPriorityRequests();
+        }
     }
 
     //    Polls after every 2 seconds.
@@ -54,6 +67,7 @@ public class KafkaOutboxProducerService {
             try {
                 kafkaTemplate.send(resolveKafkaPriorityTopic(notifEvent), event.getPayload());
                 event.setStatus(NotificationOutboxStatus.PUBLISHED);
+                notificationMetricCallback(notifEvent);
                 outboxNotificationRepository.save(event);
             } catch(Exception e) {
                 System.out.println("Failed to publish outbox event " + event);

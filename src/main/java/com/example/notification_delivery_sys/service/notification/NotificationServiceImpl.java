@@ -9,6 +9,7 @@ import com.example.notification_delivery_sys.entity.UserPreferenceRecord;
 import com.example.notification_delivery_sys.enums.NotificationOutboxStatus;
 import com.example.notification_delivery_sys.enums.NotificationStatus;
 import com.example.notification_delivery_sys.event.KafkaNotificationEvent;
+import com.example.notification_delivery_sys.metrics.NotificationMetrics;
 import com.example.notification_delivery_sys.repository.notification.NotificationRepository;
 import com.example.notification_delivery_sys.repository.notification.OutboxNotificationRepository;
 import com.example.notification_delivery_sys.service.kafka.KafkaProducerService;
@@ -68,6 +69,9 @@ public class NotificationServiceImpl implements NotificationService {
 //    private KafkaProducerService kafkaProducerService;
 
     @Autowired
+    public NotificationMetrics notificationMetrics;
+
+    @Autowired
     private JsonUtils jsonUtils;
 
     @Override
@@ -125,6 +129,8 @@ public class NotificationServiceImpl implements NotificationService {
                     .build();
 
             outboxNotificationRepository.save(outboxEvent);
+
+            notificationMetrics.notificationRequests();
 //            kafkaProducerService.sendMessage(event);  // With OutBox Event, We are not directly pushing API event request to Kafka broker.
 
             System.out.println("notif request" + notificationRequest);
