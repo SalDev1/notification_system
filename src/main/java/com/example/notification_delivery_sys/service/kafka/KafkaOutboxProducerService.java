@@ -11,6 +11,7 @@ import com.example.notification_delivery_sys.utils.JsonUtils;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -64,13 +65,16 @@ public class KafkaOutboxProducerService {
 
         for(NotificationOutboxEvent event : outBoxEvents) {
             KafkaNotificationEvent notifEvent = jsonUtils.deserialize(event.getPayload(), KafkaNotificationEvent.class);
+            MDC.put("notificationEventId", notifEvent.getNotificationEventId());
             try {
                 kafkaTemplate.send(resolveKafkaPriorityTopic(notifEvent), event.getPayload());
                 event.setStatus(NotificationOutboxStatus.PUBLISHED);
                 notificationMetricCallback(notifEvent);
                 outboxNotificationRepository.save(event);
+                log.info("Notification process completed notificationEventId={}", notifEvent.getNotificationEventId());
             } catch(Exception e) {
                 System.out.println("Failed to publish outbox event " + event);
+                log.error("Notification process failed notificationEventId={}", notifEvent.getNotificationEventId(), e);
             }
         }
     }
