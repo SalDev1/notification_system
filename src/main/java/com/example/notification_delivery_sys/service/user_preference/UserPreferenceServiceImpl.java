@@ -10,6 +10,9 @@ import com.example.notification_delivery_sys.enums.NotificationChannel;
 import com.example.notification_delivery_sys.exception.UserPreferenceNotFoundException;
 import com.example.notification_delivery_sys.metrics.UserPreferenceMetrics;
 import com.example.notification_delivery_sys.repository.user.UserPreferenceRepository;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +55,9 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
     }
 
     @Override
+//    @CircuitBreaker(name="userPreference",fallbackMethod = "preferenceFallback")
+    @Bulkhead(name="userPreference", type = Bulkhead.Type.SEMAPHORE)
+    @Retry(name = "userPreference")
     public Optional<UserPreferenceRecord> findByUserIdByChannelByCategory(UUID userId, NotificationChannel channel, NotificationCategory category) {
         return userPreferenceRepository.findByUserIdAndChannelAndCategory(userId,channel,category);
     }

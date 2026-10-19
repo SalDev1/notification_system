@@ -16,6 +16,7 @@ import com.example.notification_delivery_sys.service.kafka.KafkaProducerService;
 import com.example.notification_delivery_sys.service.user_preference.UserPreferenceService;
 import com.example.notification_delivery_sys.utils.JsonUtils;
 import com.google.common.hash.Hashing;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
