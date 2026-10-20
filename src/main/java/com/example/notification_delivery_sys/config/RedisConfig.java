@@ -11,6 +11,7 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.codec.ByteArrayCodec;
 import io.lettuce.core.codec.RedisCodec;
 import io.lettuce.core.codec.StringCodec;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,11 +21,20 @@ import java.util.function.Supplier;
 @Configuration
 public class RedisConfig {
 //    Connect to the Redis Cluster
+    @Value("${spring.data.redis.host:localhost}")
+    private String redisHostName;
+
+    @Value("${spring.data.redis.port:6379}")
+    private int redisPortNumber;
+
+    @Value("${spring.data.redis.ssl:false}")
+    private boolean redisSsl;
+
     private RedisClient redisClient() {
         return RedisClient.create(RedisURI.builder()
-                .withHost("localhost")
-                .withPort(6379)
-                .withSsl(false)
+                .withHost(redisHostName)
+                .withPort(redisPortNumber)
+                .withSsl(redisSsl)
                 .build());
     }
 
