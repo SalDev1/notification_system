@@ -33,10 +33,7 @@ A Java and Spring Boot backend that receives notification requests, saves them i
 </details>
 
 ## 🏗️ System Architecture
-
-<p align="center">
-  <img src="notification-system-architecture.png" alt="Scalable Notification Delivery System end-to-end architecture and workflow" width="100%" />
-</p>
+<img width="1536" height="1024" alt="notification-system-architecture" src="https://github.com/user-attachments/assets/ea8d4799-8b39-4c05-b8ed-f833353b24b8" />
 
 The architecture shows how a request moves through the API, database, Kafka priority consumers, delivery channels, retry handling, Redis rate limiting, monitoring, and deployment.
 
