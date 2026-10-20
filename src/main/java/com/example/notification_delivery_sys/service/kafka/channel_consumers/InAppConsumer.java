@@ -4,6 +4,8 @@ import com.example.notification_delivery_sys.dto.notification.NotificationReq;
 import com.example.notification_delivery_sys.event.KafkaNotificationEvent;
 import com.example.notification_delivery_sys.metrics.NotificationMetrics;
 import com.example.notification_delivery_sys.utils.JsonUtils;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class InAppConsumer {
     public NotificationMetrics notificationMetrics;
 
     @KafkaListener(topics = "notification.channel.inapp", groupId = "notifications-test-group")
+    @Retry(name = "inAppChannel")
+    @Bulkhead(name="inAppChannel", type = Bulkhead.Type.SEMAPHORE)
     public void consumeMessageThroughInAppChannel(String message) {
         KafkaNotificationEvent req = jsonUtils.deserialize(message, KafkaNotificationEvent.class);
         System.out.println("deseralize record ===" + req);

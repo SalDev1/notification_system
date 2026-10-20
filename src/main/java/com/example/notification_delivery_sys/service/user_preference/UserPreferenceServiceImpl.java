@@ -11,6 +11,7 @@ import com.example.notification_delivery_sys.exception.UserPreferenceNotFoundExc
 import com.example.notification_delivery_sys.metrics.UserPreferenceMetrics;
 import com.example.notification_delivery_sys.repository.user.UserPreferenceRepository;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,15 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
         return finalResponse;
     }
 
+    private Optional<UserPreferenceRecord> preferenceFallback(UUID userId, NotificationChannel channel, NotificationCategory category, CallNotPermittedException ex) {
+        System.out.println("Circuit Breaker Pattern into the picture");
+        return null;
+    }
+
     @Override
-//    @CircuitBreaker(name="userPreference",fallbackMethod = "preferenceFallback")
-    @Bulkhead(name="userPreference", type = Bulkhead.Type.SEMAPHORE)
+    @CircuitBreaker(name="userPreference",fallbackMethod = "preferenceFallback")
     @Retry(name = "userPreference")
+    @Bulkhead(name="userPreference", type = Bulkhead.Type.SEMAPHORE)
     public Optional<UserPreferenceRecord> findByUserIdByChannelByCategory(UUID userId, NotificationChannel channel, NotificationCategory category) {
         return userPreferenceRepository.findByUserIdAndChannelAndCategory(userId,channel,category);
     }
