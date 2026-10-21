@@ -6,8 +6,6 @@
 
 A Java and Spring Boot backend that receives notification requests, saves them in PostgreSQL, and processes them asynchronously with Kafka.
 
-[Architecture](#-system-architecture) · [Features](#-features) · [Kafka topics](#-kafka-topics) · [Setup](#-configuration-and-setup) · [Monitoring](#-monitoring) · [Testing](#-run-and-test) · [Troubleshooting](#-troubleshooting)
-
 </div>
 
 > **Project goal:** process notifications reliably, reduce duplicate sends, handle temporary failures, and make system behaviour easier to monitor.
