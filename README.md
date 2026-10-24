@@ -384,9 +384,8 @@ Check the connection URL, driver, credentials, timezone, database name, table cr
 | 7 | Rate limiting with Redis |
 | 8 | Preventing duplicate requests and processing |
 | 9 | Saving pending events with notification data before publishing to Kafka |
-| 10 | Not marked complete |
-| 11 | Monitoring measurements and application logs |
-| 12 | Improving failure handling, running services with Docker, and automated CI checks |
+| 10 | Monitoring measurements and application logs |
+| 11 | Improving failure handling, running services with Docker, and automated CI checks |
 
 These phase names summarise the journey from the project context. Confirm exact implementation details against the current repository.
 
