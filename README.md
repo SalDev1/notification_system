@@ -412,7 +412,7 @@ These phase names summarise the journey from the project context. Confirm exact 
 - https://medium.com/@issa.khodadadi88/implementing-kafka-producer-and-consumer-in-spring-boot-75796f0ce242
 - https://gemini.google.com/app/107d503e2e5fcde5
 - https://github.com/Rapter1990/ratelimiter/blob/main/src/main/java/com/springboot/ratelimiter/user/service/impl/RateLimiterServiceImpl.java
-- https://www.innoq.com/en/blog/2024/03/distributed-rate-limiting-with-spring-boot-and-redis/ --> Using Bucket4j algorithm.
+- https://www.innoq.com/en/blog/2024/03/distributed-rate-limiting-with-spring-boot-and-redis/
 - https://docs.spring.io/spring-data/redis/reference/redis/getting-started.html
 - https://medium.com/@arun.badhai/rate-limiter-token-bucket-f6ecd33692f2
 - https://medium.com/simform-engineering/revolutionize-monitoring-empowering-spring-boot-applications-with-prometheus-and-grafana-e99c5c7248cf
