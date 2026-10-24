@@ -370,9 +370,6 @@ Check the connection URL, driver, credentials, timezone, database name, table cr
 </details>
 
 ## 🧭 Development journey
-
-The completed phase list provided for this project is **Phases 1–9, 11, and 12**. Phase 10 is not marked complete.
-
 <details>
 <summary><strong>View phase summary</strong></summary>
 
@@ -405,3 +402,24 @@ These phase names summarise the journey from the project context. Confirm exact 
 - Controlling processing speed and handling temporary failures.
 - Collecting measurements and logs to understand system behaviour.
 - Running supporting services with Docker and checking code with GitHub Actions.
+
+## 🧭 Reference Links / Learning Materials
+- https://medium.com/@issa.khodadadi88/implementing-kafka-producer-and-consumer-in-spring-boot-75796f0ce242
+- https://medium.com/@AlexanderObregon/using-spring-boot-with-postgresql-for-data-persistence-49e843ab46fc
+- https://stackoverflow.com/questions/37694987/connecting-to-postgresql-in-a-docker-container-from-outside
+- https://medium.com/@AlexanderObregon/integrating-spring-boot-with-kafka-for-messaging-8bd07e76b038 
+- https://docs.spring.io/spring-boot/reference/messaging/kafka.html
+- https://medium.com/@issa.khodadadi88/implementing-kafka-producer-and-consumer-in-spring-boot-75796f0ce242
+- https://gemini.google.com/app/107d503e2e5fcde5
+- https://github.com/Rapter1990/ratelimiter/blob/main/src/main/java/com/springboot/ratelimiter/user/service/impl/RateLimiterServiceImpl.java
+- https://www.innoq.com/en/blog/2024/03/distributed-rate-limiting-with-spring-boot-and-redis/ --> Using Bucket4j algorithm.
+- https://docs.spring.io/spring-data/redis/reference/redis/getting-started.html
+- https://medium.com/@arun.badhai/rate-limiter-token-bucket-f6ecd33692f2
+- https://medium.com/simform-engineering/revolutionize-monitoring-empowering-spring-boot-applications-with-prometheus-and-grafana-e99c5c7248cf
+- https://oneuptime.com/blog/post/2026-01-26-custom-micrometer-metrics-spring-boot/view
+- https://factorhouse.io/articles/dead-letter-queues-kafka/
+- https://oneuptime.com/blog/post/2026-02-01-spring-boot-distributed-tracing/view
+- https://medium.com/@bectorhimanshu/logging-and-monitoring-in-springboot-with-loki-and-visualizing-loki-logs-in-grafana-f15bad714996
+- https://grafana.com/docs/opentelemetry/collector/grafana-alloy/
+- https://medium.com/garantibbva-teknoloji/applying-the-five-most-used-resiliency-patterns-using-resilience4j-with-spring-boot-1cc695988d
+- https://www.baeldung.com/resilience4j
